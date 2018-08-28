@@ -1,0 +1,30 @@
+{
+  "name": "links-mark",
+  "version": "1.0.0",
+  "description": "Validador de Links",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genesisnp/lim20181-Track-FE-markdown-list.git"
+  },
+  "keywords": [
+    "links-mark"
+  ],
+  "author": "Genesis Nole Ponce\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D Johana Nole Ponce",
+  "license": "ISC",
+  "bin": {
+    "md-links": "cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/genesisnp/lim20181-Track-FE-markdown-list/issues"
+  },
+  "homepage": "https://github.com/genesisnp/lim20181-Track-FE-markdown-list#readme",
+  "dependencies": {
+    "node-fetch": "^2.2.0",
+    "request": "^2.88.0",
+    "xmlhttprequest-ssl": "^1.5.5"
+  }
+}
