@@ -24,8 +24,8 @@ algunas estadísticas.
 [Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript
 construido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).
 Esto nos va a permitir ejecuta JavaScript en el entorno del sistema operativo,
-ya sea tu máquina o un servidor, lo cual nos abre las puertas para poder interactuar con
-el sistema operativo, sistema de archivos, redes, ...
+ya sea tu máquina o un servidor, lo cual nos abre las puertas para poder interac
+tuar con el sistema operativo, sistema de archivos, redes, ...
 En este proyecto nos alejamos un poco del navegador para construir un programa
 que se ejecute usando Node.js, donde aprenderemos sobre cómo interactuar con el
 sistema archivos, con el entorno (proceso, env, stdin/stdout/stderr), ...
@@ -91,7 +91,8 @@ En el archivo _README_ de tu proyecto tendrás que incluir:
 - Documentación de la Librería (Features, link de Demo, test, etc...).
 - Ejemplos (_snippets_) de uso.
 
-Y todo lo relevante para que cualquier developer que quiera usar tu librería pueda hacerlo sin inconvenientes
+Y todo lo relevante para que cualquier developer que quiera usar tu librería
+pueda hacerlo sin inconvenientes
 
 ### Archivos del proyecto
 
@@ -118,11 +119,15 @@ siguiente interfaz:
 
 ##### Argumentos
 
-- `path`: Ruta absoluta o relativa al archivo o directorio. Si la ruta pasada es relativa, debe resolverse como relativa al directorio desde donde se invoca node - _currentworking directory_).
+- `path`: Ruta absoluta o relativa al archivo o directorio. Si la ruta pasada es
+ relativa, debe resolverse como relativa al directorio desde donde se invoca
+ node - _currentworking directory_).
 
 - `options`: Un objeto con las siguientes propiedades:
-  - `validate`: Valor que determina si se desea validar los links encontrados en el archivo. (tipo de dato booleano)
-  - `stats`: Valor que determina si se desea calcular los stats de de los links encontrados en el archivo. (tipo de dato booleano)
+  - `validate`: Valor que determina si se desea validar los links encontrados en
+   el archivo. (tipo de dato booleano)
+  - `stats`: Valor que determina si se desea calcular los stats de de los links
+  encontrados en el archivo. (tipo de dato booleano)
 
 ##### Valor de retorno
 
@@ -153,7 +158,13 @@ mdLinks("./some/example.md", { validate: true })
 
 mdLinks("./some/example.md", { stats: true })
   .then(links => {
-    // => [{ href, text, file, total, unique, domains }]
+    // => [{total, unique }]
+  })
+  .catch(console.error);
+
+  mdLinks("./some/example.md", { stats: true, validate:true })
+  .then(links => {
+    // => [{total, unique, broken }]
   })
   .catch(console.error);
 
@@ -230,7 +241,7 @@ Broken: 1
 
 ## Entregables
 
-Módulo instalable via `npm install <github-user>/md-links`. Este módulo debe
+Módulo instalable directamente desde el repositorio de Github via `npm install <github-user>/md-links`. Este módulo debe
 incluir tanto un ejecutable como una interfaz que podamos importar con `require`
 para usarlo programáticamente.
 
@@ -240,6 +251,49 @@ para usarlo programáticamente.
 - Integración continua con Travis o Circle CI.
 
 ## Pistas / Tips / Recursos
+
+### FAQs
+
+#### ¿Cómo hago para que mi módulo sea _instalable_ desde GitHub?
+
+Para que el módulo sea instalable desde GitHub solo tiene que:
+
+- Estar en un repo público de GitHub
+- Contener un `package.json` válido
+
+Con el comando `npm install githubname/reponame` podemos instalar directamente
+desde GitHub. Ver [docs oficiales de `npm install` acá](https://docs.npmjs.com/cli/install).
+
+Por ejemplo, el [`course-parser`](https://github.com/Laboratoria/course-parser)
+que usamos para la currícula no está publicado en el registro público de NPM,
+así que lo instalamos directamente desde GitHub con el comando `npm install
+Laboratoria/course-parser`.
+
+### Sugerencias de implementación
+
+La implementación de este proyecto tiene varias partes: leer del sistema de
+archivos, recibir argumentos a través de la línea de comando, analizar texto,
+hacer consultas HTTP, ... y todas estas cosas pueden enfocarse de muchas formas,
+tanto usando librerías como implementando en VanillaJS.
+
+Por poner un ejemplo, el _parseado_ (análisis) del markdown para extraer los
+links podría plantearse de las siguientes maneras (todas válidas):
+
+- Usando un _módulo_ como [markdown-it](https://github.com/markdown-it/markdown-it),
+  que nos devuelve un arreglo de _tokens_ que podemos recorrer para identificar
+  los links.
+- Siguiendo otro camino completamente, podríamos usar
+  [expresiones regulares (`RegExp`)](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions).
+- También podríamos usar una combinación de varios _módulos_ (podría ser válido
+  transformar el markdown a HTML usando algo como [marked](https://github.com/markedjs/marked)
+  y de ahí extraer los link con una librería de DOM como [JSDOM](https://github.com/jsdom/jsdom)
+  o [Cheerio](https://github.com/cheeriojs/cheerio) entre otras).
+- Usando un _custom renderer_ de [marked](https://github.com/markedjs/marked)
+  (`new marked.Renderer()`).
+
+No dudes en consultar a tus compañeras, coaches y/o el [foro de la comunidad](http://community.laboratoria.la/c/js)
+si tienes dudas existenciales con respecto a estas decisiones. No existe una
+"única" manera correcta :wink:
 
 ### Pistas
 
@@ -251,6 +305,7 @@ para usarlo programáticamente.
 - [Leer un Directorio](https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback)
 - [Path](https://nodejs.org/api/path.html)
 - [Linea de comando CLI](https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e)
+- [npm install githubname/reponame](https://docs.npmjs.com/cli/install)
 
 ### Tutoriales / NodeSchool workshoppers
 
@@ -309,13 +364,30 @@ habilidades blandas. Te aconsejamos revisar la rúbrica:
 
 ### General
 
-- [ ] Entrega el link del módulo publicado en npm
+Que sea instalable directamente desde el repositorio de Github
+
+- [ ] `npm install --global <github-user>/md-links`
 
 ### `README.md`
 
 - [ ] Un board con el backlog para la implementación de la librería.
 - [ ] Documentación técnica de la librería.
 - [ ] Guía de uso e instalación de la librería
+
+### API `mdLinks(path, opts)`
+
+- [ ] El módulo exporta una función con la interfaz (API) esperada.
+- [ ] Implementa soporte para archivo individual
+- [ ] Implementa soporte para directorios
+- [ ] Implementa `options.validate`
+
+### CLI
+
+- [ ] Expone ejecutable `md-links` en el path (configurado en `package.json`)
+- [ ] Se ejecuta sin errores / output esperado
+- [ ] Implementa `--validate`
+- [ ] Implementa `--stats`
+- [ ] Implementa `--validate --stats`
 
 ### Pruebas / tests
 
