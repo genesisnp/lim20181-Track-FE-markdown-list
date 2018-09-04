@@ -4,8 +4,7 @@ const path = require('path');
 // SE REALIZA RECURSIVIDAD. 
 const getFiles = (dir, files_) => {
     files_ = files_ || [];
-    let arrConcat = ['dihey'];
-    let data=[];
+    let arrConcat = ['gene'];
     fs.readdir(dir, (error, files) => {
        
         files.forEach(file => {
@@ -26,10 +25,9 @@ const getFiles = (dir, files_) => {
                     //arr.push(file)
                     leerFile(name)
                         .then((data) => {
-                            console.log(data);
                             arrConcat = arrConcat.push(data);
                             
-                        console.log(arrConcat);
+                        // console.log(arrConcat);
 
                         })
                 }
@@ -76,11 +74,6 @@ const leerFile = (name) => {
     })
 
 }
-
-
-
-
-
 
 
 // FUNCIÓN PARA BUSCAR ARCHIVOS CON EXTENSIÓN MD

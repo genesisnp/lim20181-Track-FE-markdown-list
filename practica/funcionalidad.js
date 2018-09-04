@@ -10,8 +10,6 @@ const mdLinks = (path = "./", options = { validate: false, stats: false }) => {
       if (file.search('.md') >= 0) {
         arr.push(file)
         fs.readFile(file, 'utf-8', (error, text) => {
-          console.log(file);
-          console.log(text);
         
           if (error) {
             console.log(error);
@@ -26,7 +24,7 @@ const mdLinks = (path = "./", options = { validate: false, stats: false }) => {
             text.replace(/\[(.+?)\]/g, function ($0, $1) {
               words.push($1)
             })
-            newArrayUrl = [...new Set(urls)];//url que no se repiten
+            // newArrayUrl = [...new Set(urls)];//url que no se repiten
             // console.log(urls.length);
             // console.log(newArrayUrl.length);
             // console.log(newArrayUrl);
@@ -36,36 +34,33 @@ const mdLinks = (path = "./", options = { validate: false, stats: false }) => {
                 arrUrls.push();
                 request(url, function (error, response) {
                   let status = response && response.statusCode;
-                      if (status >= 400){
-                        contador++;
-                        console.log(contador);
-                      }
-                       
-                        
-
-                  //console.log(status);
-                  // arrUrls.push({
-                  //   href: url,
-                  //   status
-                  // })
+                  if (status >= 400) {
+                    contador++;
+                    console.log(contador);
+                  }
+                  console.log(status);
+                  arrUrls.push({
+                    href: url,
+                    status
+                  })
 
                 });
                 // console.log("hola options.validate true")
               } else {
-                // arrUrls.push({
-                //   href: url,
-                //   text: words[i],
-                // })
+                arrUrls.push({
+                  href: url,
+                  text: words[i],
+                })
               }
-              //console.log(arrUrls)
+              console.log(arrUrls)
             })
-            // console.log(arrUrls)
+            console.log(arrUrls)
 
           }
 
         })
 
-        
+
       };
     });
 

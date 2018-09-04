@@ -38,9 +38,9 @@ const getFiles = (dir) => {
   })
 
   const gene = arr.toString();
-  return gene
-  // console.log(gene);
+  // return gene
+  console.log(gene);
 }
-// getFiles('./')
+getFiles('./')
 module.exports.verificarRuta = verificarRuta;
 module.exports.getFiles = getFiles;
