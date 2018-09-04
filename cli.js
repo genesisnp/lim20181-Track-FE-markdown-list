@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const [, , ...args] = process.argv
 const rutaJsCambio = require('./ruta.js');
-const indexJs = require ('./index.js');
+const mdLinks = require('./index.js');
 
 const options = {
     validate: false,
@@ -10,8 +10,8 @@ const options = {
 
 if (args[0]) {
 
-    let path = rutaJsCambio.verificarRuta(args[0]);  
-
+    let path = rutaJsCambio.verificarRuta(args[0]);
+// usar forEach
     for (let i = 1; i < args.length; i++) {
 
         if (args[i] == "--stats") {
@@ -19,24 +19,24 @@ if (args[0]) {
         } else if (args[i] == "--validate") {
             options.validate = true
             console.log('mostrar todos los links');
-;
+            ;
         } else {
-    
+
         }
     }
 
-    const promesa = indexJs.mdLinks(path,options);
-    console.log(promesa
-    .then(data => {
-      console.log(data)
-    })
-    .catch(err => {
-      console.log(err)
-    }));
-    
-   
-}else{
-    console.log('no hay ruta'); 
+    mdLinks(path, options)
+    // console.log(promesa
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+
+
+} else {
+    console.log('no hay ruta');
 }
 
 

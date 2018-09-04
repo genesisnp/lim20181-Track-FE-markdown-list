@@ -8,7 +8,7 @@ const mdLinks = (path = "./", options = { validate: false, stats: false }) => {
   fs.readdir(path, (error, files) => {
     files.forEach(file => {
       if (file.search('.md') >= 0) {
-        //arr.push(file)
+        arr.push(file)
         fs.readFile(file, 'utf-8', (error, text) => {
           console.log(file);
           console.log(text);
@@ -33,7 +33,7 @@ const mdLinks = (path = "./", options = { validate: false, stats: false }) => {
             let contador = 0;
             urls.forEach((url) => {
               if (options.validate) {
-                //arrUrls.push();
+                arrUrls.push();
                 request(url, function (error, response) {
                   let status = response && response.statusCode;
                       if (status >= 400){

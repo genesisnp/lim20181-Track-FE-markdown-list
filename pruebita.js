@@ -1,7 +1,7 @@
 //OBTENIENDO FILES DE MANERA SINCRONA
 const fs = require('fs');
 const path = require('path');
-// SE REALIZA CURSIVIDAD. 
+// SE REALIZA RECURSIVIDAD. 
 const getFiles = (dir, files_) => {
     files_ = files_ || [];
     let arrConcat = ['dihey'];
@@ -12,7 +12,7 @@ const getFiles = (dir, files_) => {
             const name = path.join(dir, file)
 
             if (fs.statSync(name).isDirectory()) {
-                console.log(file);
+                // console.log(file);
                 if (file === 'node_modules' || file === '.git') {
                     // console.log('aqui estan las dependencias');
                 } else {
@@ -26,8 +26,8 @@ const getFiles = (dir, files_) => {
                     //arr.push(file)
                     leerFile(name)
                         .then((data) => {
-                            // console.log(data);
-                            arrConcat = arrConcat.concat(data);
+                            console.log(data);
+                            arrConcat = arrConcat.push(data);
                             
                         console.log(arrConcat);
 
@@ -49,7 +49,6 @@ const leerFile = (name) => {
         let words = [],
             urls = [],
             arrUrls = [];
-        console.log('hola');
 
         const text = fs.readFileSync(name).toString();
         text.replace(/\((.+?)\)/g, function ($0, $1) {

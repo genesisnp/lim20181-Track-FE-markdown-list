@@ -9,8 +9,7 @@ const mdLinks = (path, options) => {
     return new Promise((resolve, reject) => {
       try {
         setTimeout(() => {
-          console.log("Async work is complete ");
-          resolve(getFiles(path)); // Resolving
+          resolve(getFiles(path));
         }, 1000);
 
       } catch (error) {
@@ -25,7 +24,7 @@ const mdLinks = (path, options) => {
       try {
         setTimeout(() => {
           console.log('genesis');
-          resolve(validarlink(path,"sv"));
+          resolve(validarlink(path));
         }, 3000);
 
       } catch (error) {
@@ -40,7 +39,7 @@ const mdLinks = (path, options) => {
     return new Promise((resolve, reject) => {
       try {
         setTimeout(() => {
-          resolve(validarlink(path,"v"));
+          resolve(validarlink(path));
           
         }, 1000);
 
@@ -68,7 +67,7 @@ const mdLinks = (path, options) => {
     })
   }
 }
-module.exports.mdLinks = mdLinks;
+module.exports = mdLinks;
 
 // mdLinks()
 
@@ -113,34 +112,27 @@ const validarlink = (path ,op) => {
 
   arrayLinks.forEach((objlink) => {
     //arrUrls.push();
-    let url = objlink.href
+    const url = objlink.href
     request(url, function (error, response) {
       let status = response && response.statusCode;
-      // console.log(response.statusCode);
-      // console.log(status);
       
       if (status <= 400) {
          contador ++;
-        // console.log(contador);
 
         arrStats.push(path + "  " +  url  +  " OK " + status )
-        // console.log(arrStats);
-        
 
       }else {
-
         arrStats.push(path + "  " +  url  +  " fail " + status )
 
-      // console.log(arrStats);
       }
-      console.log(arrStats);
-      // return arrStats
+      // console.log(arrStats);
+      return arrStats
     });
   
   })
 
   if(op === "v"){
-    return ["heydymayu"]
+    return ["mayu"]
   }else if (op === "s"){
     return ({ Total : tam  , Unique :3})
   }else if(op==="sv"){

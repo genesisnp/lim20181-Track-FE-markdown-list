@@ -1,55 +1,69 @@
 //OBTENIENDO FILES DE MANERA SINCRONA
 const fs = require('fs');
 const path = require('path');
-// SE REALIZA CURSIVIDAD. 
+// SE REALIZA RECURSIVIDAD. 
 const getFiles = (dir, files_) => {
-  files_ = files_ || [];
-  let arrConcat = ['dihey'];
-  let data = [];
-  fs.readdir(dir, (error, files) => {
+  
+  //let data = [];
+  // return new Promise( (resolve, reject) =>{ 
+    files_ = files_ || [];
+    let arrFinalUrls = [];
+    let promises =[];
+    fs.readdir(dir, (error, files) => {  
+      
+      files.forEach(file => {
+        const name = path.join(dir, file)
 
-    files.forEach(file => {
-      const name = path.join(dir, file)
-
-      if (fs.statSync(name).isDirectory()) {
-        console.log(file);
-        if (file === 'node_modules' || file === '.git') {
-          // console.log('aqui estan las dependencias');
+        if (fs.statSync(name).isDirectory()) {
+          // console.log(file);
+          if (file === 'node_modules' || file === '.git') {
+            // console.log('aqui estan las dependencias');
+          } else {
+            getFiles(name);
+          }
         } else {
-          // console.log('aqui NO estan las dependencias');
-          // console.log(name);
-          getFiles(name);
+          if (file.search('.md') >= 0) {
+            
+            var promise = leerFile(name);
+            promises.push(promise);
+              // .then(data =>{
+              //   //arr.push(data);
+              //   console.log(data);
+              // })
+           
+
+          }
         }
-      } else {
 
-        if (file.search('.md') >= 0) {
-          //arr.push(file)
-          leerFile(name)
-            .then((data) => {
-              // console.log(data);
-              arrConcat = arrConcat.concat(data);
-
-              console.log(arrConcat);
-
-            })
-        }
-      }
-
-    })
-    return arrConcat
+      })
+      
+      // Promise.all(promises).then((data)=>{
+      //   console.log(data)
+      //   if(data.length != 0 && data[0].length != 0){
+      //     data[0].forEach((array,i) =>{
+            
+            
+      //     })
+          
+      //   }
+      // });
+     
+    
   });
-  // return files_;
+  console.log(promises)
 }
 
-console.log(getFiles('./'))
+getFiles('./');
+  // .then( arr => {
+  //   console.log(arr)
+  // })
 
 const leerFile = (name) => {
 
-  return new Promise((resolve, reject) => {
+  // return new Promise((resolve, reject) => {
     let words = [],
       urls = [],
       arrUrls = [];
-    console.log('hola');
 
     const text = fs.readFileSync(name).toString();
     text.replace(/\((.+?)\)/g, function ($0, $1) {
@@ -68,13 +82,13 @@ const leerFile = (name) => {
 
     }
     // console.log(arrUrls)
-    resolve(arrUrls)
+    // resolve($arrFinal)
 
     // console.log(arrUrls)
+    return arrUrls;
+    // reject(error)
 
-    reject(error)
-
-  })
+  // })
 
 }
 
